@@ -30,8 +30,19 @@ def generate_embeddings(documents, model):
         show_progress_bar=True,
         convert_to_numpy=True)
     return embeddings
+
+
+def save_embeddings_and_docs(embeddings, documents, filename):
+    data_to_save = []
+    for i in range(len(documents)):
+        data_to_save.append({
+            "filename": filename[i],
+            "content": documents[i]
+        })
+    np.save(os.path.join(DATA_PATH, "embeddings.npy"), embeddings)
     
-    
+    with open(os.path.join(DATA_PATH, "documents.json"), "w", encoding="utf-8") as f:
+        json.dump(data_to_save, f, indent=2)
 
 if __name__ == "__main__":
     documents, filenames = load_docs()
@@ -39,3 +50,6 @@ if __name__ == "__main__":
     
     embeddings = generate_embeddings(documents,model)
     print("Embeddings shape:", embeddings.shape)
+    
+    save_embeddings_and_docs(embeddings, documents, filenames)
+    print("Embeddings and document metadata saved to data/") 
