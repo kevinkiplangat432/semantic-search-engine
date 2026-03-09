@@ -2,12 +2,13 @@ import numpy as np
 from sentence_transformers import SentenceTransformer
 import json
 
-model = SentenceTransformer("all-MiniLM-L6-v2")
 
-embeddings = np.load("data/embeddings.npy")
+model = SentenceTransformer('all-MiniLM-L6-v2')
+
+embeddings = np.load("data/embeddings.npy") # import the vectors
 with open("data/documents.json", "r", encoding="utf-8") as f:
     documents = json.load(f)
-
+    
 def search(query, top_k=3):
     query_embedding = model.encode([query], convert_to_numpy=True)
     similarities = np.dot(embeddings, query_embedding.T).flatten()
