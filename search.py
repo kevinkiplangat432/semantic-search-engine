@@ -2,35 +2,45 @@ import numpy as np
 from sentence_transformers import SentenceTransformer
 import json
 
+model= SentenceTransformer("all-MiniLM-L6-v2")
 
-model = SentenceTransformer('all-MiniLM-L6-v2')
+embeddings = np.load('data/embeddings.npy')
 
-embeddings = np.load("data/embeddings.npy") # import the vectors
-with open("data/documents.json", "r", encoding="utf-8") as f:
-    documents = json.load(f)
-    
-def search(query, top_k=3):
+with open("data/documents.json", 'r', encoding='utf-8') as f:
+    documents= json.load(f)
+ 
+def search(query, top_k):
     query_embedding = model.encode([query], convert_to_numpy=True)
-    similarities = np.dot(embeddings, query_embedding.T).flatten()
-    top_indices = np.argsort(similarities)[::-1][:top_k]
-    
-    results = []
-    for idx in top_indices:
-        results.append({
-            "filename": documents[idx]["filename"],
-            "score": float(similarities[idx]),
-            "content": documents[idx]["content"][:200] + "..."
-        })
-    return results
-
-if __name__ == "__main__":
-    while True:
-        query = input("\nEnter search query (or 'quit' to exit): ")
-        if query.lower() == 'quit':
-            break
+    similarities = np.dot( embeddings, query_embedding.T).flatten()
+    top_indices = np.argsort()
+# if __name__ == "__main__":
+#     while True:
+#         query = input("\nEnter search query (or 'quit' to exit): ")
+#         if query.lower() == 'quit':
+#             break
         
-        results = search(query)
-        print(f"\nTop {len(results)} results:")
-        for i, result in enumerate(results, 1):
-            print(f"\n{i}. {result['filename']} (Score: {result['score']:.4f})")
-            print(f"   {result['content']}")
+#         results = search(query)
+#         print(f"\nTop {len(results)} results:")
+#         for i, result in enumerate(results, 1):
+#             print(f"\n{i}. {result['filename']} (Score: {result['score']:.4f})")
+#             print(f"   {result['content']}")
+
+
+
+
+
+
+   
+# def search(query, top_k=3):
+#     query_embedding = model.encode([query], convert_to_numpy=True)
+#     similarities = np.dot(embeddings, query_embedding.T).flatten()
+#     top_indices = np.argsort(similarities)[::-1][:top_k]
+    
+#     results = []
+#     for idx in top_indices:
+#         results.append({
+#             "filename": documents[idx]["filename"],
+#             "score": float(similarities[idx]),
+#             "content": documents[idx]["content"][:200] + "..."
+#         })
+#     return results
