@@ -29,7 +29,7 @@ if __name__ == "__main__":
         query = input("\nEnter search query (or 'quit' to exit): ") # the users input
         if query.lower() == 'quit':  # allow the user to quit
             break 
-        top_k = input("\nEnter the maximum number of search result you want to see")
+        top_k = int(input("\nEnter the maximum number of search results you want to see == "))
         results = search(query, top_k) 
         print(f"\nTop {len(results)} results:")
         for i, result in enumerate(results, 1):
