@@ -25,6 +25,9 @@ def load_docs():
 
 
 def generate_embeddings(documents, model):
+    # Generate embeddings for all documents using the provided model
+    # each document is converted into a vector representation (embedding) that captures its semantic meaning
+    # 384 `dimensions for the "all-MiniLM-L6-v2" model
     embeddings = model.encode(
         documents, 
         show_progress_bar=True,

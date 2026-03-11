@@ -11,7 +11,8 @@ with open("data/documents.json", 'r', encoding='utf-8') as f:
  
 def search(query, top_k):
     query_embedding = model.encode([query], convert_to_numpy=True)
-    similarities = np.dot( embeddings, query_embedding.T).flatten()
+    similarities = np.dot( embeddings, query_embedding.T).flatten()   # similarity = (A · B) / (||A|| × ||B||)
+    # Dot Product (A · B): a₁b₁ + a₂b₂ + ... + a₃₈₄b₃₈₄
     top_indices = np.argsort(similarities)[::-1][:top_k]
     
     results = []
